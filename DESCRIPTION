@@ -6,10 +6,10 @@ Authors@R: c(
 	)
 Description: The 'tmap' package provides two plotting modes for static and interactive thematic maps. This package extends 'tmap' with two additional modes based on 'Mapbox GL JS' and 'MapLibre GL JS'. These modes feature interactive vector tiles, globe views, and other modern web-mapping capabilities, while maintaining a consistent 'tmap' interface across all plotting modes.
 License: GPL-3
-Version: 0.2-1
+Version: 0.3
 Encoding: UTF-8
 Depends: R (>= 4.1),
-Imports: tmap (>= 4.3), mapgl (>= 0.4.1), terra, rlang, cli, stars,
+Imports: tmap (>= 4.4), mapgl (>= 0.4.6), terra, rlang, cli, stars,
         data.table, grDevices, colorspace, htmltools, htmlwidgets, sf,
         tmaptools, units
 Suggests: knitr
@@ -20,8 +20,8 @@ URL: https://github.com/r-tmap/tmap.mapgl,
 BugReports: https://github.com/r-tmap/tmap.mapgl/issues
 Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-05-07 13:14:15 UTC; mtes
+Packaged: 2026-06-15 09:13:36 UTC; mtes
 Author: Martijn Tennekes [aut, cre]
 Maintainer: Martijn Tennekes <mtennekes@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-05-09 14:40:29 UTC
+Date/Publication: 2026-06-15 10:50:02 UTC

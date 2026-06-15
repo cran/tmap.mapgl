@@ -1,3 +1,13 @@
+version 0.3
+- shiny integration
+- glyphs supported (from tmap.glyphs)
+- updated legend, control/globe button, and popup look
+- tm_legend styling arguments used
+- fill_alpha working for tm_polygons_3d
+- rendering options added to opt_tm_polygons_3d
+- basemap default changed and fallback added
+- providers from esri and maptiler added
+
 version 0.2.1
 - fixed minor bug
 

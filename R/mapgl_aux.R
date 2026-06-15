@@ -68,13 +68,13 @@ tmapMaplibreAuxPlot.default = function(a, bi, bbx, facet_row, facet_col, facet_p
 #' @keywords internal
 #' @rdname tmapMapbox
 tmapMapboxAuxPrepare.tm_aux_basemap = function(a, bs, id, o) {
-	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPBOX)
+	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPBOX, mode = "mapbox")
 }
 
 #' @export
 #' @rdname tmapMapbox
 tmapMaplibreAuxPrepare.tm_aux_basemap = function(a, bs, id, o) {
-	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPLIBRE)
+	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPLIBRE, mode = "maplibre")
 }
 
 
@@ -82,21 +82,39 @@ tmapMaplibreAuxPrepare.tm_aux_basemap = function(a, bs, id, o) {
 #' @keywords internal
 #' @rdname tmapMapbox
 tmapMapboxAuxPrepare.tm_aux_tiles = function(a, bs, id, o) {
-	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPBOX)
+	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPBOX, mode = "mapbox")
 }
 
 #' @export
 #' @rdname tmapMapbox
 tmapMaplibreAuxPrepare.tm_aux_tiles = function(a, bs, id, o) {
-	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPLIBRE)
+	mapgl_tiles_prep(a, bs, id, o, e = .TMAP_MAPLIBRE, mode = "maplibre")
 }
 
 
 
 
-mapgl_tiles_prep = function(a, bs, id, o, e) {
-	e$style = a$server
-	a$server
+mapgl_tiles_prep = function(a, bs, id, o, e, mode) {
+	serv = a$server
+	# Allow raw style URLs to pass through; only validate named providers.
+	is_url = is.character(serv) && grepl("^(https?|mapbox|maptiler)://", serv)
+	if (!is_url && !(serv %in% tmap::tmap_providers(mode))) {
+		eq = utils::getFromNamespace("basemap_equivalent", "tmap")(serv, mode)
+		if (!is.na(eq)) {
+			utils::getFromNamespace("message_basemaps_equivalent", "tmap")(serv, mode, eq)
+			serv = eq
+		} else {
+			fallback = o$basemap.server[1]
+			utils::getFromNamespace("message_basemaps_invalid_provider", "tmap")(serv, mode, fallback)
+			serv = fallback
+		}
+	}
+	e$style = serv
+	# Optional per-basemap API key from tm_basemap(api = ...) (the same `api`
+	# argument used for Stadia/Thunderforest in plot mode). NULL unless supplied,
+	# in which case it is used for esri/maptiler instead of the env var.
+	e$api_key = a$api
+	serv
 }
 
 
